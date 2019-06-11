@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import './App.css';
 
 import Friend from './components/Friend';
@@ -27,12 +26,30 @@ class App extends React.Component {
   handlerAddFriend = e => {
     e.preventDefault();
 
+    // get submit parent
     const getParent = e.target.parentNode;
-    const getInputs = getParent.querySelectorAll('input');
-    axios.post(_URL)
+
+    // get input values
+    const nameInput = getParent.querySelector('input[name="name"]').value;
+    const ageInput = parseInt(getParent.querySelector('input[name="age"]').value);
+    const emailInput = getParent.querySelector('input[name="email"]').value;
+
+    // add form input values to API
+    axios.post(_URL, {
+      name: nameInput,
+      age: ageInput,
+      email: emailInput
+    })
+      .then( res => this.setState({
+        friendList: res.dat
+      }))
+      .catch( err => console.log(err));
+
 
     // clear input fields
-    getInputs.forEach(input => input.value = '');
+    getParent
+      .querySelectorAll('input')
+      .forEach(input => input.value = '');
   }
 
   render() {
@@ -40,7 +57,7 @@ class App extends React.Component {
       <div className="App">
         <h1>My Friends List</h1>
         {this.state.friendList.map(friend => (
-          <Friend friend={friend} />
+          <Friend key={friend.id} friend={friend} />
         ))}
         <AddFriendForm handlerAddFriend={this.handlerAddFriend} />
       </div>
