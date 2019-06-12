@@ -41,10 +41,9 @@ class App extends React.Component {
       email: emailInput
     })
       .then( res => this.setState({
-        friendList: res.dat
+        friendList: res.data
       }))
       .catch( err => console.log(err));
-
 
     // clear input fields
     getParent
