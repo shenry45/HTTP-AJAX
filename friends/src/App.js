@@ -51,14 +51,35 @@ class App extends React.Component {
       .forEach(input => input.value = '');
   }
 
+  handlerDeleteFriend = friendID => {
+
+    axios.delete(`${_URL}/${friendID}`,
+      {
+        params: {
+          id: friendID
+        }
+      }
+    )
+      .then (res => {
+        this.setState({ friendList: res.data })
+      })
+      .catch (err => console.log(err))
+  }
+
   render() {
     return (
       <div className="App">
         <h1>My Friends List</h1>
         {this.state.friendList.map(friend => (
-          <Friend key={friend.id} friend={friend} />
+          <Friend
+            key={friend.id}
+            friend={friend}
+            handlerDeleteFriend={this.handlerDeleteFriend}
+          />
         ))}
-        <AddFriendForm handlerAddFriend={this.handlerAddFriend} />
+        <AddFriendForm
+          handlerAddFriend={this.handlerAddFriend}
+        />
       </div>
     );
   }
