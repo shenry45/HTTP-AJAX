@@ -4,6 +4,7 @@ import './App.css';
 
 import Friend from './components/Friend';
 import AddFriendForm from './components/AddFriendForm';
+import FindFriend from './components/FindFriendForm';
 
 const _URL = 'http://localhost:5000/friends';
 
@@ -66,10 +67,29 @@ class App extends React.Component {
       .catch (err => console.log(err))
   }
 
+  handlerFindFriend = e => {
+    e.preventDefault();
+
+    const friendID = parseInt(e.target.querySelector('input').value);
+
+    axios.put(`${_URL}/${friendID}`,
+      { id: friendID, name: "Edited" }
+    )
+      .then (res => {
+        this.setState({ friendList: res.data });
+      })
+      .catch (err => console.log(err))
+
+      e.target.querySelector('input').value = '';
+  }
+
   render() {
     return (
       <div className="App">
         <h1>My Friends List</h1>
+          <div>
+            <FindFriend handlerFindFriend={this.handlerFindFriend} />
+          </div>
         {this.state.friendList.map(friend => (
           <Friend
             key={friend.id}

@@ -36,27 +36,37 @@ const FriendDiv = styled.div`
   flex-flow: row nowrap;
   justify-content: center;
   align-items: flex-start;
+
+  h3 {
+    margin-top: 5px;
+  }
 `;
 
 const FriendDelete = styled.div`
   margin-right: 30px;
-  padding: 10px;
   border: 2px solid #000;
   border-radius: 50%;
   background-color: #fff;
 
-  p {
+  button {
     cursor: pointer;
     font-size: 2rem;
     font-weight: bold;
-    margin: 0;
+    margin: 5px;
     line-height: 1.2rem;
-    position: relative;
-    top: -5px;
+    background: none;
+    border: none;
+    height: 20px;
+    width: 20px;
+    padding: 0;
+ 
+    &:hover {
+      color: #f00;
+    }
 
+    &:focus {
+      outline: none;
+    }
   }
   
-  &:hover {
-    color: #f00;
-  }
 `;
